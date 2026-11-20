@@ -1,6 +1,4 @@
 import json,os,random,sys,urllib.request as w
-BOOK={"2p1pn2":"c4c5","2n2n2/2b":"f3g5","2p2n2/3p":"d1a4","3p1n2/8/3N":"f1b5","3p1n2/4p3/3P":"e5d4","2n2n2/4p3/4P3/5N":"a8b8"}
-BOOK={"2p1pn2":"c4c5"}
 U0=os.environ["MAKEFUN_ENV_URL"]
 MATE=30000;INF=31000
 MG=[100,350,350,500,1000,0];EG=[100,300,300,500,950,0]
@@ -238,7 +236,9 @@ def um():
     OCC=[o0,o1];PWN=[p0,p1];KING=[k0,k1]
 
 def ev():
-    s=M
+    ph=PHS
+    if ph>24:ph=24
+    s=(M*ph+E*(24-ph))//24
     wp=PWN[0];bp=PWN[1];b=B
     x=wp
     while x:
@@ -310,7 +310,7 @@ def ab(d,a,b,ply):
     best=-INF;flag=1;bm=0;a0=a;mc=0
     for _,m in order(ms,ply,hb):
         mc+=1
-        r=1 if(mc>4 and not m&(1<<17) and not (m>>14)&7 and d>=3)else 0
+        r=1 if (mc>4 and not m&(1<<17) and not (m>>14)&7 and d>=3) else 0
         if mk(m,chk):
             v=-ab(d-1-r,-b,-a,ply+1)
             um()
@@ -335,8 +335,6 @@ def cvt(m):
 
 def mv(fen,budget=45000):
     global NODES,LMT,TT,KL,U
-    for k,v in BOOK.items():
-        if k in fen:return v
     load(fen)
     TT={};KL=[(0,0)]*99;U=[]
     ms=gen(0)
