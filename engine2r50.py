@@ -236,9 +236,7 @@ def um():
     OCC=[o0,o1];PWN=[p0,p1];KING=[k0,k1]
 
 def ev():
-    ph=PHS
-    if ph>24:ph=24
-    s=(M*ph+E*(24-ph))//24
+    s=M
     wp=PWN[0];bp=PWN[1];b=B
     x=wp
     while x:
@@ -310,7 +308,7 @@ def ab(d,a,b,ply):
     best=-INF;flag=1;bm=0;a0=a;mc=0
     for _,m in order(ms,ply,hb):
         mc+=1
-        r=1 if (mc>4 and not m&(1<<17) and not (m>>14)&7 and d>=3) else 0
+        r=1 if(mc>4 and not m&(1<<17) and not (m>>14)&7 and d>=3)else 0
         if mk(m,chk):
             v=-ab(d-1-r,-b,-a,ply+1)
             um()
