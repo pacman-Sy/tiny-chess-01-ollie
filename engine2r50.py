@@ -307,10 +307,12 @@ def ab(d,a,b,ply):
             if ent[3]==2 and v>=b:return v
     ms=gen(0)
     if not ms:return MATE-ply if chk else 0
-    best=-INF;flag=1;bm=0;a0=a
+    best=-INF;flag=1;bm=0;a0=a;mc=0
     for _,m in order(ms,ply,hb):
+        mc+=1
+        r=1 if (mc>4 and not m&(1<<17) and not (m>>14)&7 and d>=3) else 0
         if mk(m,chk):
-            v=-ab(d-1,-b,-a,ply+1)
+            v=-ab(d-1-r,-b,-a,ply+1)
             um()
             if NODES>LMT:return a0
             if v>best:
